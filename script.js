@@ -51,21 +51,32 @@ $(document).ready(function () {
   };
   setInterval(updateTime,1000);
   updateTime();
-
-let storedItem = localStorage.getItem("storedItem");
-
-function save(){
-    let item = document.getElementById("savedText").val;
-    localStorage.setItem("storedItem", item);
-    document.getElementById("savedText").innerHTML = item;
-}
-function get(){
-    localStorage.getItem("storedItem");
-    document.getElementById("returnedText").innerHTML = storedItem ;
-}
   
-
+    //Savebutton/ local storage setup
+     $(".saveBtn").on("click",function(){
+         for(let i=9; i <= 17; i++)
+         save(i);
+        })
+        
+        let storedItem = localStorage.getItem("storedItem");
+        
+        function save(i){
+            let item = (document.getElementById("text" +i).value);
+            console.log(item);
+            localStorage.setItem("storedItem" +i, item);
+            
+            //  console.log(storedItem);
+        }
+        
+        function get(){
+            for( i=9; i <= 17;i++){
+                let item = (document.getElementById("text" +i));
+                let returnItem = localStorage.getItem("storedItem" +i);
+                    item.value = returnItem;
+            console.log(returnItem);
+            }
+        }
+        get();
+    
   timeLoop();
-  save();
-  get();
 });
