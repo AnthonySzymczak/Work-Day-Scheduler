@@ -1,45 +1,54 @@
 //Calls document first
 $(document).ready(function(){
+    let tasks = {};
 
-    //Tasks Declaration
-    let tasks = [];
+    //TIME ARRAY
+    let myTimeArray = [
+        $('#9'),
+        $('#10'),        
+        $('#11'),
+        $('#12'),
+        $('#13'),
+        $('#14'),
+        $('#15'),
+        $('#16'),
+        $('#17'),
+    ]
 
-    //Time array 
-    const timeArr = [
-        $("#9"),
-        $("#10"),
-        $("#11"),
-        $("#12"),
-        $("#13"),
-        $("#14"),
-        $("#15"),
-        $("#16"),
-        $("#17")
-    ];
-//Save Button & Localstorage setup, including blank text area alert
-    $(".saveBtn").on("click", function(){
-
-        //Declaring text attributes  
-        let text = $(this).siblings(".info").val();
-
-        //Declaring Time attributes
-        let time = $(this).parent().att("id");
-
-        //Formating Current Date with Moment.js
-        let currentDate = moment().format('MMMM Do YYYY, hh:mm:ss a');
-
-        tasks.push({
-            info: text,
-            time: time,
-            date: currentDate
-        });
-        // Local Storage setup        
-        localStorage.setItem("tasks",JSON.stringify(tasks));
-
-        //Text Alert indicating a blank field        
-        if (text === ""){
-        alert("Text area empty, Input your desired tasks.")
+    //Load Tasks
+    let loadTasks = function() {
+        tasks = JSON.parse(localStorage.getItem("tasks"));
     }
-})
+
+    //Save Button & Localstorage setup
+    let saveTasks = function() {
+        localStorage.setItem("tasks", JSON.stringify(tasks));
+    };     
+    $(".saveBtn").on("click", function(){
+    })
+    // Time Loop
+    function timeLoop(){
+        for (let i = 0; i < myTimeArray.length; i++){
+            //Formating Current Date with Moment.js
+            let terasDate = moment().hours();
+            //Hour declaration
+            let godzina = parseInt($(".area") [i].id);
+            //Now ELement Declaration
+            let terasElem = $(".area")[i];
+
+            if (godzina < terasDate){
+                terasElem.classList.add('past');
+            }else if(godzina === terasDate){
+                terasElem.classList.add('present');
+                terasElem.classList.remove('past');
+            } else {
+                terasElem.classList.add('future');
+                terasElem.classList.remove('present');
+                terasElem.classList.remove('past');
+            }   
+        }
+    }
+    timeLoop();
+
 
 })
